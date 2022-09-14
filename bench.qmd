@@ -1,0 +1,92 @@
+---
+title: "bench"
+format: html
+---
+
+```{r}
+#| echo: false
+execute_r <- function(path) {
+  fs::path_ext(path) <- "R"
+  processx::run(
+    command = "Rscript",
+    args = path,
+    cleanup_tree = TRUE
+  )
+}
+
+execute_py <- function(path) {
+  fs::path_ext(path) <- "py"
+  processx::run(
+    command = reticulate::py_config()$python,
+    args = path,
+    cleanup_tree = TRUE
+  )
+}
+
+parse_result <- function(out) {
+  as.numeric(out$stdout)
+}
+
+run_bench <- function(name) {
+  tibble::tibble(
+    bench = fs::path_file(name),
+    r = parse_result(execute_r(name)),
+    py = parse_result(execute_py(name))
+  )
+}
+
+library(tidyverse)
+run_benchmarks <- function() {
+  purrr::map_dfr(1:10, ~{
+  purrr::map_dfr(
+    fs::dir_ls(path = "bench", glob = "*.R"),
+    run_bench
+  )  
+}) %>% 
+  group_by(bench) %>% 
+  summarise(
+    median_r = median(r),
+    median_py = median(py),
+    mean_r = mean(r),
+    mean_py = mean(py),
+    min_r = min(r),
+    min_py = min(py),
+    max_r = max(r),
+    max_py = max(py),
+    rel = median_r/median_py
+  ) %>% 
+  knitr::kable()
+}
+```
+
+### batch_size = 1000
+
+```{r}
+Sys.setenv("BATCH_SIZE" = 1000)
+run_benchmarks()
+```
+
+### batch_size = 32
+
+```{r}
+Sys.setenv("BATCH_SIZE" = 32)
+run_benchmarks()
+```
+
+### batch_size = 1000 - CRAN
+
+```{r}
+Sys.setenv("BATCH_SIZE" = 1000)
+Sys.setenv("R_LIBS_USER" = tail(.libPaths(), 1))
+run_benchmarks()
+```
+
+
+### batch_size = 32 - CRAN
+
+```{r}
+Sys.setenv("BATCH_SIZE" = 32)
+Sys.setenv("R_LIBS_USER" = tail(.libPaths(), 1))
+run_benchmarks()
+```
+
