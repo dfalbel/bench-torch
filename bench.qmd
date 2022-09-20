@@ -63,6 +63,7 @@ run_benchmarks <- function() {
 
 ```{r}
 Sys.setenv("BATCH_SIZE" = 1000)
+Sys.setenv("ITER" = 500)
 run_benchmarks()
 ```
 
@@ -70,6 +71,7 @@ run_benchmarks()
 
 ```{r}
 Sys.setenv("BATCH_SIZE" = 32)
+Sys.setenv("ITER" = 2000)
 run_benchmarks()
 ```
 
@@ -77,6 +79,7 @@ run_benchmarks()
 
 ```{r}
 Sys.setenv("BATCH_SIZE" = 1000)
+Sys.setenv("ITER" = 500)
 Sys.setenv("R_LIBS_USER" = tail(.libPaths(), 1))
 run_benchmarks()
 ```
@@ -86,6 +89,7 @@ run_benchmarks()
 
 ```{r}
 Sys.setenv("BATCH_SIZE" = 32)
+Sys.setenv("ITER" = 2000)
 Sys.setenv("R_LIBS_USER" = tail(.libPaths(), 1))
 run_benchmarks()
 ```
