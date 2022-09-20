@@ -1,7 +1,6 @@
 library(torch)
 
-batch_size <- as.numeric(Sys.getenv("BATCH_SIZE", unset = "1000"))
-iter <- 250*1000/batch_size
+batch_size <- as.numeric(Sys.getenv("BATCH_SIZE", unset = "32"))
 
 f <- function() {
   w <- torch_randn(784, 512, requires_grad = TRUE)
@@ -15,5 +14,9 @@ f <- function() {
 
   invisible(NULL)
 }
+
+iter <- 1
+f()
+iter <- as.numeric(Sys.getenv("ITER", unset = "500"))
 
 cat(system.time(f())[["elapsed"]])

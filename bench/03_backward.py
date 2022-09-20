@@ -2,8 +2,7 @@ import torch
 import time
 import os
 
-batch_size = int(os.environ.get('BATCH_SIZE', "1000"))
-ir = int(500*1000/batch_size)
+batch_size = int(os.environ.get('BATCH_SIZE', "32"))
 
 def mm ():
   x = torch.randn(batch_size, 784)
@@ -13,7 +12,10 @@ def mm ():
     loss.backward()
     w.grad.zero_()
 
+ir = 1
+mm()
+ir = int(os.environ.get('ITER', "1000000"))
+
 start_time = time.time()
 mm()
 print((time.time() - start_time))
-
