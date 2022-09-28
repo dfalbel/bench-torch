@@ -3,10 +3,11 @@ import time
 import os
 
 batch_size = int(os.environ.get('BATCH_SIZE', "1000"))
+device = os.environ.get("DEVICE", "cpu")
 
 def mm ():
-  x = torch.randn(batch_size, 784)
-  w = torch.randn(784, 512, requires_grad = True)
+  x = torch.randn(batch_size, 784, device = device)
+  w = torch.randn(784, 512, requires_grad = True, device = device)
   opt = torch.optim.SGD([w], lr = 0.01)
   for i in range(ir):
     loss = torch.sum(torch.mm(x, w))

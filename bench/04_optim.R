@@ -1,10 +1,11 @@
 library(torch)
 
 batch_size <- as.numeric(Sys.getenv("BATCH_SIZE", unset = "1000"))
+device <- Sys.getenv("DEVICE", "cpu")
 
 f <- function() {
-  w <- torch_randn(784, 512, requires_grad = TRUE)
-  x <- torch_randn(batch_size, 784)
+  w <- torch_randn(784, 512, requires_grad = TRUE, device = device)
+  x <- torch_randn(batch_size, 784, device = device)
   opt <- optim_sgd(w, lr = 0.01)
 
   for (i in 1:iter) {
