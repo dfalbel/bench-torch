@@ -4,9 +4,10 @@ import os
 
 batch_size = int(os.environ.get('BATCH_SIZE', "32"))
 
+x = torch.randn(batch_size, 784)
+w = torch.randn(784, 512, requires_grad = True)
+
 def mm ():
-  x = torch.randn(batch_size, 784)
-  w = torch.randn(784, 512, requires_grad = True)
   for i in range(ir):
     loss = torch.sum(torch.mm(x, w))
     loss.backward()

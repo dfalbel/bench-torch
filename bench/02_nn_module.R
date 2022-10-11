@@ -2,10 +2,10 @@ library(torch)
 
 batch_size <- as.numeric(Sys.getenv("BATCH_SIZE", unset = "1000"))
 
-f <- function() {
-  module <- nn_linear(784, 512)
-  x <- torch_randn(batch_size, 784)
+module <- nn_linear(784, 512)
+x <- torch_randn(batch_size, 784)
 
+f <- function() {
   for (i in 1:iter) {
     module(x)
   }
