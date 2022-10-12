@@ -1,0 +1,36 @@
+default: &default
+  matrix:
+    LANGUAGE_SETTINGS: &lang_settings
+        - {LANGUAGE: "r", VERSION: "CRAN-v0.8.1"}
+        - {LANGUAGE: "r", VERSION: "main"}
+        - {LANGUAGE: "py", VERSION: "1.12.1"}
+
+    BATCH_SIZE_ITER: &batch_size
+        - {BATCH_SIZE: 32  , ITER: 2000}
+        - {BATCH_SIZE: 256 , ITER: 1000}
+        - {BATCH_SIZE: 512 , ITER: 1000}
+        - {BATCH_SIZE: 1024, ITER: 500}
+        - {BATCH_SIZE: 2048, ITER: 500}
+
+bench:
+  00_torch_mm:
+    *default
+  01_dollar_mm:
+    *default
+  02_nn_module:
+    *default
+  03_backward:
+    *default
+  04_optim:
+    *default
+  05_dataloader:
+    matrix:
+      LANGUAGE_SETTINGS: *lang_settings
+      BATCH_SIZE_ITER:
+        - {BATCH_SIZE: 32  , ITER: 2000}
+        - {BATCH_SIZE: 256 , ITER: 1000}
+        - {BATCH_SIZE: 512 , ITER: 1000}
+        - {BATCH_SIZE: 1024, ITER: 500}
+        - {BATCH_SIZE: 2048, ITER: 500}
+  06_cats_vs_dogs:
+    *default
