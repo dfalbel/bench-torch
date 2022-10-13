@@ -11,6 +11,6 @@ done
 
 # Create python venvs
 for version in $(Rscript -e "benchtorch:::required_py_versions()"); do
-  python -m venv "./PYENV/torch-v$version"
+  python -m venv --copies "./PYENV/torch-v$version"
   "./PYENV/torch-v$version/bin/python" -m pip install -U torch==$version
 done
