@@ -18,22 +18,6 @@ parse_config <- function(file = "bench.yaml") {
     purrr::map(~purrr::modify_at(.x, "config", flatten_config))
 }
 
-required_r_versions <- function(file = "bench.yaml") {
-  file |>
-    parse_config() |>
-    purrr::keep(~.x$config['LANGUAGE'] == "r") |>
-    purrr::map_chr(~.x$config['VERSION']) |>
-    unique()
-}
-
-required_py_versions <- function(file) {
-  file |>
-    parse_config() |>
-    purrr::keep(~.x$config['LANGUAGE'] == "py") |>
-    purrr::map_chr(~.x$config['VERSION']) |>
-    unique()
-}
-
 flatten_config <- function(config) {
   out <- list()
 
