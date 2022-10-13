@@ -26,7 +26,7 @@ jobs:
     steps:
       - run: |
           apt-get update -y
-          apt-get install -y sudo software-properties-common dialog apt-utils tzdata
+          apt-get install -y sudo software-properties-common dialog apt-utils tzdata wget zip unzip
 
       - uses: actions/checkout@v2
 
