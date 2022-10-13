@@ -36,7 +36,7 @@ jobs:
 
       - name: Install benchtorch
         run: |
-          pak::pkg_install(.)
+          pak::pkg_install(".")
         shell: Rscript {0}
 
       - uses: actions/setup-python@v4
