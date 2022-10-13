@@ -43,6 +43,10 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: test python installation
+        run: |
+          python --version
+
       - name: Run setup
         run:
           sh ./tools/setup.sh
