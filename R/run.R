@@ -2,7 +2,8 @@ run_benchmark <- function(file = "bench.yaml") {
   configs <- parse_config(file)
   results <- list()
   for (i in seq_along(configs)) {
-    cat("[", i, "/", length(configs), "]", conf_summary(configs[[i]]))
+    cat("[", i, "/", length(configs), "]", configs[[i]]$name, "|",
+        conf_summary(configs[[i]]))
     time <- system.time({
       results[[i]] <- execute_experiment(configs[[i]])
     })
