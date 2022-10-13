@@ -45,4 +45,13 @@ jobs:
         run:
           sh ./tools/setup.sh
 
+      - name: Setup MKL as default
+        run:
+          sh ./tools/mkl4deb.sh
+
+      - name: Quick test
+        run: |
+          sessionInfo()
+        shell: Rscript {0}
+
 
