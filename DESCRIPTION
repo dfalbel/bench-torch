@@ -16,4 +16,5 @@ Imports:
     remotes,
     processx,
     fs,
-    glue
+    glue,
+    jsonlite
