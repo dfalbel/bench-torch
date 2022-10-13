@@ -33,7 +33,7 @@ execute_r <- function(path, env) {
 
   # we special case the VERSION env var here.
   version <- env[["VERSION"]]
-  r_libs <- "./RLIBS/{version}/"
+  r_libs <- glue::glue("./RLIBS/{version}/")
   env <- c(env, R_LIBS_USER = r_libs)
 
   processx::run(
