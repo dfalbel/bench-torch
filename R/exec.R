@@ -55,7 +55,7 @@ execute_py <- function(path, env) {
     command = py_interpreter,
     args = path,
     cleanup_tree = TRUE,
-    env = env
+    env = c("current", env)
   )
 }
 
