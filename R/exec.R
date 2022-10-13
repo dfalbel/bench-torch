@@ -37,7 +37,7 @@ execute_r <- function(path, env) {
   env <- c(env, R_LIBS_USER = r_libs)
 
   processx::run(
-    command = "Rscript",
+    command = Sys.which("Rscript"),
     args = path,
     cleanup_tree = TRUE,
     env = env
@@ -63,7 +63,7 @@ get_version <- function(env) {
   execute(
     "tools/version",
     env
-  )
+  )$stdout
 }
 
 get_language <- function(env) {
