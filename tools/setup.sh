@@ -4,7 +4,7 @@ for version in $(Rscript -e "benchtorch:::required_r_versions()"); do
   mkdir -p "./RLIBS/$version"
   install_command=$(Rscript -e "benchtorch:::get_r_install_command('$version')")
   R_LIBS_USER="./RLIBS/$version" TORCH_INSTALL=1 Rscript \
-      -e "install.packages(c('remotes', 'sessioninfo'))" \
+      -e "install.packages(c('remotes', 'sessioninfo', 'torchvision'))" \
       -e "$install_command" \
       -e "library(torch)"
 done
