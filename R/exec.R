@@ -8,8 +8,8 @@
 #'
 execute_experiment <- function(experiment) {
   out <- execute(
-    name = file.path("bench", experiment$name),
-    config = experiment$config
+    path = file.path("bench", experiment$name),
+    env = experiment$config
   )
   experiment$time <- as.numeric(out$stdout)
   experiment$version <- get_version(experiment$config)
@@ -34,7 +34,7 @@ execute_r <- function(path, env) {
   # we special case the VERSION env var here.
   version <- env[["VERSION"]]
   r_libs <- "./RLIBS/{version}/"
-  env <- c(env, R_LIBS_USER = rlibs)
+  env <- c(env, R_LIBS_USER = r_libs)
 
   processx::run(
     command = "Rscript",
@@ -67,7 +67,7 @@ get_version <- function(env) {
 }
 
 get_language <- function(env) {
-  language <- env$LANGUAGE
+  language <- env["LANGUAGE"]
 
   if (is.null(language))
     stop("env var `LANGUAGE` must be set.")
