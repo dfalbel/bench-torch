@@ -43,6 +43,6 @@ jobs:
 
       - name: Run setup
         run:
-          ./setup.sh
+          sh ./tools/setup.sh
 
 
