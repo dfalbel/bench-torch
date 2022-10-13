@@ -11,6 +11,10 @@ done
 
 # Create python venvs
 for version in $(Rscript -e "benchtorch:::required_py_versions()"); do
-  python -m venv --copies "./PYENV/torch-v$version"
+  python3 -m venv --copies "./PYENV/torch-v$version"
   "./PYENV/torch-v$version/bin/python" -m pip install -U torch==$version
 done
+
+# download and unzip image data
+wget https://storage.googleapis.com/torch-datasets/cats-dogs.zip
+unzip cats-dogs.zip
