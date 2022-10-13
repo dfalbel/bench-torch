@@ -59,6 +59,7 @@ jobs:
       - name: Run benchmarks
         run: |
           benchtorch:::run_benchmark()
+        shell: Rscript {0}
 
       - uses: actions/upload-artifact@v3
         with:
