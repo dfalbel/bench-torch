@@ -30,19 +30,32 @@ execute <- function(path, env) {
 
 execute_r <- function(path, env) {
   fs::path_ext(path) <- "R"
+
+  # we special case the VERSION env var here.
+  version <- env[["VERSION"]]
+  r_libs <- "./RLIBS/{version}/"
+  env <- c(env, R_LIBS_USER = rlibs)
+
   processx::run(
     command = "Rscript",
     args = path,
-    cleanup_tree = TRUE
+    cleanup_tree = TRUE,
+    env = env
   )
 }
 
 execute_py <- function(path, env) {
   fs::path_ext(path) <- "py"
+
+  # we special case the VERSION env var here.
+  version <- env[["VERSION"]]
+  py_interpreter <- glue::glue("./PYENV/torch-v{version}/bin/python")
+
   processx::run(
-    command = reticulate::py_config()$python,
+    command = py_interpreter,
     args = path,
-    cleanup_tree = TRUE
+    cleanup_tree = TRUE,
+    env = env
   )
 }
 

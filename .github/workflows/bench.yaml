@@ -56,4 +56,12 @@ jobs:
           sessionInfo()
         shell: Rscript {0}
 
+      - name: Run benchmarks
+        run: |
+          benchtorch:::run_benchmark()
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: results
+          path: results.json
 
