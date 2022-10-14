@@ -27,10 +27,17 @@ bench:
     matrix:
       LANGUAGE_SETTINGS: *lang_settings
       BATCH_SIZE_ITER:
-        - {BATCH_SIZE: 32  , ITER: 2000}
+        - {BATCH_SIZE: 32  , ITER: 1500}
         - {BATCH_SIZE: 256 , ITER: 1000}
         - {BATCH_SIZE: 512 , ITER: 1000}
         - {BATCH_SIZE: 1024, ITER: 500}
         - {BATCH_SIZE: 2048, ITER: 500}
   06_cats_vs_dogs:
-    *default
+    matrix:
+      LANGUAGE_SETTINGS: *lang_settings
+      BATCH_SIZE_ITER:
+        - {BATCH_SIZE: 32  , ITER: 500}
+        - {BATCH_SIZE: 256 , ITER: 300}
+        - {BATCH_SIZE: 512 , ITER: 200}
+        - {BATCH_SIZE: 1024, ITER: 100}
+        - {BATCH_SIZE: 2048, ITER: 50}
