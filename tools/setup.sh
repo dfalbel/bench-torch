@@ -13,7 +13,7 @@ done
 # Create python venvs
 for version in $(Rscript -e "benchtorch:::required_py_versions()"); do
   python3 -m venv --copies "./PYENV/torch-v$version"
-  "./PYENV/torch-v$version/bin/python" -m pip install -U torch==$version
+  "./PYENV/torch-v$version/bin/python" -m pip install -U torch==$version torchvision
 done
 
 # download and unzip image data
