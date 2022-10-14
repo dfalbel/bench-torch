@@ -12,6 +12,8 @@ default: &default
         - {BATCH_SIZE: 1024, ITER: 500}
         - {BATCH_SIZE: 2048, ITER: 500}
 
+repeats: 10
+
 bench:
   00_torch_mm:
     *default
@@ -36,8 +38,8 @@ bench:
     matrix:
       LANGUAGE_SETTINGS: *lang_settings
       BATCH_SIZE_ITER:
-        - {BATCH_SIZE: 32  , ITER: 500}
-        - {BATCH_SIZE: 256 , ITER: 300}
-        - {BATCH_SIZE: 512 , ITER: 200}
-        - {BATCH_SIZE: 1024, ITER: 100}
-        - {BATCH_SIZE: 2048, ITER: 50}
+        - {BATCH_SIZE: 32  , ITER: 100}
+        - {BATCH_SIZE: 256 , ITER: 50}
+        - {BATCH_SIZE: 512 , ITER: 20}
+        - {BATCH_SIZE: 1024, ITER: 10}
+        - {BATCH_SIZE: 2048, ITER: 5}

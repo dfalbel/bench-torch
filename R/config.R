@@ -7,7 +7,7 @@ parse_config <- function(file = "bench.yaml") {
   file <- yaml::read_yaml(file)
   benchmarks <- names(file$bench)
 
-  file$bench |>
+  list_of_exps <- file$bench |>
     purrr::map(~purrr::cross(.x$matrix)) |>
     purrr::imap(function(configs, name) {
       purrr::map(configs, function(config) {
@@ -16,6 +16,12 @@ parse_config <- function(file = "bench.yaml") {
     }) |>
     purrr::flatten() |>
     purrr::map(~purrr::modify_at(.x, "config", flatten_config))
+
+
+  if (is.null(file$repeats))
+    file$repeats <- 1
+
+  rep(list_of_exps, file$repeats)
 }
 
 flatten_config <- function(config) {

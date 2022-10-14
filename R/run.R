@@ -9,6 +9,8 @@ run_benchmark <- function(file = "bench.yaml") {
     })
     cat(" TOTAL_TIME_ELLAPSED:", time[["elapsed"]], "\n")
   }
+  # make config a named list, so jsonlite casts it to json dicts.
+  results <- purrr::map(results, ~purrr::modify_at(.x, "config", as.list))
   jsonlite::write_json(results, "results.json")
 }
 
@@ -18,3 +20,5 @@ conf_summary <- function(config) {
   values <- config
   c(rbind(nms, values))
 }
+
+
