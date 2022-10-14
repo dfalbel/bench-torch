@@ -11,7 +11,15 @@ run_benchmark <- function(file = "bench.yaml") {
   }
   # make config a named list, so jsonlite casts it to json dicts.
   results <- purrr::map(results, ~purrr::modify_at(.x, "config", as.list))
-  jsonlite::write_json(results, "results.json")
+  path <- glue::glue("results/{Sys.Date()}/{short_hash(results)}-results.json")
+  fs::dir_create(
+    fs::path_dir(path),
+    recurse = TRUE
+  )
+  jsonlite::write_json(
+    results,
+    path
+  )
 }
 
 conf_summary <- function(config) {
@@ -21,4 +29,7 @@ conf_summary <- function(config) {
   c(rbind(nms, values))
 }
 
+short_hash <- function(result) {
+  substr(digest::digest(result), 1, 7)
+}
 

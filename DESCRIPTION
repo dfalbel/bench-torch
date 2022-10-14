@@ -17,4 +17,5 @@ Imports:
     processx,
     fs,
     glue,
-    jsonlite
+    jsonlite,
+    digest
