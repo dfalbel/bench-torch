@@ -28,7 +28,7 @@ jobs:
     steps:
       - run: |
           apt-get update -y
-          apt-get install -y sudo software-properties-common dialog apt-utils tzdata wget zip unzip git
+          apt-get install -y sudo software-properties-common dialog apt-utils tzdata wget zip unzip git libicu-dev
 
       - uses: actions/checkout@v3
 
