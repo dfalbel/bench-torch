@@ -38,6 +38,7 @@ jobs:
 
       - name: Install benchtorch
         run: |
+          install.packages("pak")
           pak::pkg_install(".")
         shell: Rscript {0}
 
