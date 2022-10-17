@@ -12,34 +12,35 @@ default: &default
         - {BATCH_SIZE: 1024, ITER: 500}
         - {BATCH_SIZE: 2048, ITER: 500}
 
-repeats: 10
+repeats: 1
 
 bench:
   00_torch_mm:
     *default
-  01_dollar_mm:
-    *default
-  02_nn_module:
-    *default
-  03_backward:
-    *default
-  04_optim:
-    *default
-  05_dataloader:
-    matrix:
-      LANGUAGE_SETTINGS: *lang_settings
-      BATCH_SIZE_ITER:
-        - {BATCH_SIZE: 32  , ITER: 1500}
-        - {BATCH_SIZE: 256 , ITER: 1000}
-        - {BATCH_SIZE: 512 , ITER: 1000}
-        - {BATCH_SIZE: 1024, ITER: 500}
-        - {BATCH_SIZE: 2048, ITER: 500}
-  06_cats_vs_dogs:
-    matrix:
-      LANGUAGE_SETTINGS: *lang_settings
-      BATCH_SIZE_ITER:
-        - {BATCH_SIZE: 32  , ITER: 100}
-        - {BATCH_SIZE: 256 , ITER: 50}
-        - {BATCH_SIZE: 512 , ITER: 20}
-        - {BATCH_SIZE: 1024, ITER: 10}
-        - {BATCH_SIZE: 2048, ITER: 5}
+
+#  01_dollar_mm:
+#    *default
+#  02_nn_module:
+#    *default
+#  03_backward:
+#    *default
+#  04_optim:
+#    *default
+#  05_dataloader:
+#    matrix:
+#      LANGUAGE_SETTINGS: *lang_settings
+#      BATCH_SIZE_ITER:
+#        - {BATCH_SIZE: 32  , ITER: 1500}
+#        - {BATCH_SIZE: 256 , ITER: 1000}
+#        - {BATCH_SIZE: 512 , ITER: 1000}
+#        - {BATCH_SIZE: 1024, ITER: 500}
+#        - {BATCH_SIZE: 2048, ITER: 500}
+#  06_cats_vs_dogs:
+#    matrix:
+#      LANGUAGE_SETTINGS: *lang_settings
+#      BATCH_SIZE_ITER:
+#        - {BATCH_SIZE: 32  , ITER: 100}
+#        - {BATCH_SIZE: 256 , ITER: 50}
+#        - {BATCH_SIZE: 512 , ITER: 20}
+#        - {BATCH_SIZE: 1024, ITER: 10}
+#        - {BATCH_SIZE: 2048, ITER: 5}
