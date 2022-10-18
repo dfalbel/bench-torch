@@ -27,9 +27,10 @@ jobs:
 
     steps:
       - run: |
-          add-apt-repository ppa:git-core/ppa -y
           apt-get update -y
-          apt-get install -y sudo software-properties-common dialog apt-utils tzdata wget zip unzip git libicu-dev
+          apt-get install -y sudo software-properties-common dialog apt-utils tzdata wget zip unzip
+          add-apt-repository ppa:git-core/ppa -y
+          apt-get install -y git
 
       - uses: actions/checkout@v3
         with:
