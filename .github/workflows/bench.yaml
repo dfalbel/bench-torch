@@ -31,7 +31,7 @@ jobs:
           apt-get install -y sudo software-properties-common dialog apt-utils tzdata wget zip unzip
           add-apt-repository ppa:git-core/ppa -y
           apt-get update -y
-          apt-get install -y git
+          apt-get install -y git libopenblas-base
 
       - uses: actions/checkout@v3
         with:
@@ -72,7 +72,7 @@ jobs:
         run: |
           benchtorch:::run_benchmark()
         shell: Rscript {0}
-        
+
       - uses: EndBug/add-and-commit@v9
         with:
           add: "results/*"
