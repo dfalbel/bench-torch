@@ -34,6 +34,7 @@ jobs:
 
       - name: Commit results
         run: |
+          ls
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
           echo "This is the Fourth File" > results/results.txt
