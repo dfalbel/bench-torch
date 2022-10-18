@@ -39,13 +39,12 @@ jobs:
 
       - name: Commit results
         run: |
-          ls
-          git config user.email "actions@github.com"
-          git config user.name "GitHub Actions"
-          echo "This is the Fourth File" > results/results.txt
-          git add results/*
-          git commit -m 'Add new results' || echo "Add new results"
-          git push origin || echo "Add new results"
+          sudo git config user.email "actions@github.com"
+          sudo git config user.name "GitHub Actions"
+          sudo echo "This is the Fourth File" > results/results.txt
+          sudo git add results/*
+          sudo git commit -m 'Add new results' || echo "Add new results"
+          sudo git push origin || echo "Add new results"
 
       - uses: r-lib/actions/setup-r@v2
         with:
