@@ -41,6 +41,7 @@ jobs:
         run: |
           mkdir results || true
           echo "This is the Fourth File" > results/results.txt
+          git config --global --add safe.directory /__w/bench-torch/bench-torch
 
       - uses: EndBug/add-and-commit@v9
         with:
