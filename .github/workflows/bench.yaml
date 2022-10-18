@@ -30,6 +30,7 @@ jobs:
           apt-get update -y
           apt-get install -y sudo software-properties-common dialog apt-utils tzdata wget zip unzip
           add-apt-repository ppa:git-core/ppa -y
+          apt-get update -y
           apt-get install -y git
 
       - uses: actions/checkout@v3
