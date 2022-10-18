@@ -14,7 +14,7 @@ jobs:
 
     container:
       image: nvidia/cuda:11.2.2-cudnn8-devel-ubuntu20.04
-      options: --gpus all
+      options: --gpus all --user 1000
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -39,12 +39,12 @@ jobs:
 
       - name: Commit results
         run: |
-          sudo git config user.email "actions@github.com"
-          sudo git config user.name "GitHub Actions"
-          sudo echo "This is the Fourth File" > results/results.txt
-          sudo git add results/*
-          sudo git commit -m 'Add new results' || echo "Add new results"
-          sudo git push origin || echo "Add new results"
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          echo "This is the Fourth File" > results/results.txt
+          git add results/*
+          git commit -m 'Add new results' || echo "Add new results"
+          git push origin || echo "Add new results"
 
       - uses: r-lib/actions/setup-r@v2
         with:
