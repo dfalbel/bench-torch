@@ -13,7 +13,7 @@ ds <- torchvision::image_folder_dataset(
 )
 
 f <- function() {
-  i <- 1
+  i <- 0
   coro::loop(for(el in dataloader(ds, batch_size = batch_size)) {
     x <- el[[1]]
     y <- el[[2]]
