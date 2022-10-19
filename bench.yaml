@@ -12,6 +12,26 @@ default: &default
         - {BATCH_SIZE: 1024, ITER: 500}
         - {BATCH_SIZE: 2048, ITER: 500}
 
+small: &small
+  matrix:
+    LANGUAGE_SETTINGS: *lang_settings
+    BATCH_SIZE_ITER:
+        - {BATCH_SIZE: 32  , ITER: 500}
+        - {BATCH_SIZE: 256 , ITER: 100}
+        - {BATCH_SIZE: 512 , ITER: 50}
+        - {BATCH_SIZE: 1024, ITER: 20}
+        - {BATCH_SIZE: 2048, ITER: 10}
+
+mini: &mini
+  matrix:
+    LANGUAGE_SETTINGS: *lang_settings
+    BATCH_SIZE_ITER:
+        - {BATCH_SIZE: 32  , ITER: 100}
+        - {BATCH_SIZE: 256 , ITER: 20}
+        - {BATCH_SIZE: 512 , ITER: 5}
+        - {BATCH_SIZE: 1024, ITER: 5}
+        - {BATCH_SIZE: 2048, ITER: 5}
+
 repeats: 10
 
 bench:
@@ -26,20 +46,8 @@ bench:
   04_optim:
     *default
   05_dataloader:
-    matrix:
-      LANGUAGE_SETTINGS: *lang_settings
-      BATCH_SIZE_ITER:
-        - {BATCH_SIZE: 32  , ITER: 500}
-        - {BATCH_SIZE: 256 , ITER: 100}
-        - {BATCH_SIZE: 512 , ITER: 50}
-        - {BATCH_SIZE: 1024, ITER: 20}
-        - {BATCH_SIZE: 2048, ITER: 10}
+    *small
   06_cats_vs_dogs:
-    matrix:
-      LANGUAGE_SETTINGS: *lang_settings
-      BATCH_SIZE_ITER:
-        - {BATCH_SIZE: 32  , ITER: 100}
-        - {BATCH_SIZE: 256 , ITER: 20}
-        - {BATCH_SIZE: 512 , ITER: 5}
-        - {BATCH_SIZE: 1024, ITER: 5}
-        - {BATCH_SIZE: 2048, ITER: 5}
+    *mini
+  07_mnist:
+    *small
