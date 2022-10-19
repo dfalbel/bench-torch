@@ -12,7 +12,7 @@ default: &default
         - {BATCH_SIZE: 1024, ITER: 500}
         - {BATCH_SIZE: 2048, ITER: 500}
 
-repeats: 5
+repeats: 10
 
 bench:
   00_torch_mm:
