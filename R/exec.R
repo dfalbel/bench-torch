@@ -13,6 +13,7 @@ execute_experiment <- function(experiment) {
   )
   experiment$time <- as.numeric(out$stdout)
   experiment$version <- get_version(experiment$config)
+  experiment$platform <- sessionInfo()[["platform"]]
   experiment
 }
 
