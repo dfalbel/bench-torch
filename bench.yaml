@@ -51,7 +51,7 @@ bench:
   07_mnist:
     matrix:
       LANGUAGE_SETTINGS:
-        - { LANGUAGE: "r", VERSION: "CRAN-v0.8.1" }
+        - { LANGUAGE: "r", VERSION: "0.8.1-syncronize" }
         - { LANGUAGE: "r", VERSION: "main", VECTORIZED_DS: "yes" }
         - { LANGUAGE: "r", VERSION: "main", VECTORIZED_DS: "no" }
         - { LANGUAGE: "py", VERSION: "1.12.1" }
