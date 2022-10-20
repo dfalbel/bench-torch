@@ -25,6 +25,7 @@ if (device == "cpu") {
     f()
     torch:::cuda_synchronize()
   }
+}
 
 
 iter <- 1
