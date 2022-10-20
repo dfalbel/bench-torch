@@ -34,7 +34,7 @@ if (device == "cpu") {
       x <- el[[1]]$cuda()
       y <- el[[2]]$cuda()
     })
-    cuda_synchronize()
+    torch:::cuda_synchronize()
     invisible(NULL)
   }
 }

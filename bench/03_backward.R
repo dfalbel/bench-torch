@@ -21,7 +21,7 @@ if (device == "cpu") {
 } else {
   fn <- function() {
     f()
-    cuda_synchronize()
+    torch:::cuda_synchronize()
   }
 
 
