@@ -3,7 +3,7 @@ import torchvision
 import time
 import os
 
-batch_size = int(os.environ.get('BATCH_SIZE', "1000"))
+batch_size = int(os.environ.get('BATCH_SIZE', "128"))
 
 mnist_dataset = torchvision.datasets.MNIST(
   download = True, 
@@ -57,7 +57,7 @@ def f():
 ir = 1
 f()
 
-ir = int(os.environ.get('ITER', "10"))
+ir = int(os.environ.get('ITER', "20"))
 
 start_time = time.time()
 f()

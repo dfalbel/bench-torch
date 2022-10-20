@@ -1,12 +1,31 @@
 library(torch)
 library(torchvision)
 
-batch_size <- as.numeric(Sys.getenv("BATCH_SIZE", unset = "1000"))
-mnist_dataset <- torchvision::mnist_dataset(
-  root = "./mnist-r",
-  download = TRUE,
-  transform = transform_to_tensor
-)
+batch_size <- as.numeric(Sys.getenv("BATCH_SIZE", unset = "128"))
+vectorized <- Sys.getenv("VECTORIZED_DS", unset = "yes")
+
+if (vectorized == "no") {
+  mnist_dataset <- torchvision::mnist_dataset(
+    root = "./mnist-r",
+    download = TRUE,
+    transform = transform_to_tensor
+  )
+} else {
+  mnist_dataset <- torch::dataset(
+    initialize = function(...) {
+      mnist_dataset <- torchvision::mnist_dataset(...)
+      self$data <- torch_tensor(mnist_dataset$data, dtype = torch_float())$div(255)$unsqueeze(2)
+      self$classes <- mnist_dataset$targets
+    },
+    .getbatch = function(i) {
+      list(self$data[i], self$classes[i])
+    },
+    .length = function() {
+      self$data$size(1)
+    }
+  )(root = "./mnist-r",
+    download = TRUE)
+}
 
 net <- nn_module(
   "Net",
@@ -58,5 +77,5 @@ f <- function() {
 iter <- 1
 f()
 
-iter <- as.numeric(Sys.getenv("ITER", unset = "100"))
+iter <- as.numeric(Sys.getenv("ITER", unset = "20"))
 cat(system.time(f())[["elapsed"]])
