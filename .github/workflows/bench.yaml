@@ -25,9 +25,13 @@ jobs:
       DEBIAN_FRONTEND: 'noninteractive'
       R_KEEP_PKG_SOURCE: yes
       CUDA: '11.3'
-      R_MAKEVARS_USER: '${{ env.GITHUB_WORKSPACE }}/bench-torch/bench-torch/Makevars'
 
     steps:
+
+      - name: Allow parallel compilation
+        run: |
+          echo "R_MAKEVARS_USER=$GITHUB_WORKSPACE/bench-torch/bench-torch/Makevars" >> $GITHUB_ENV
+
       - run: |
           apt-get update -y
           apt-get install -y sudo software-properties-common dialog apt-utils tzdata wget zip unzip
