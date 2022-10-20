@@ -25,7 +25,7 @@ jobs:
       DEBIAN_FRONTEND: 'noninteractive'
       R_KEEP_PKG_SOURCE: yes
       CUDA: '11.3'
-      R_MAKEVARS_USER: "${{ env.GITHUB_WORKSPACE }}/bench-torch/bench-torch/Makevars"
+      R_MAKEVARS_USER: '${{ env.GITHUB_WORKSPACE }}/bench-torch/bench-torch/Makevars'
 
     steps:
       - run: |
