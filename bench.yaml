@@ -50,9 +50,10 @@ bench:
   06_cats_vs_dogs:
     *mini
   07_mnist:
-    LANGUAGE_SETTINGS:
-        - {LANGUAGE: "r", VERSION: "CRAN-v0.8.1"}
-        - {LANGUAGE: "r", VERSION: "main", VECTORIZED_DS: "yes" }
-        - {LANGUAGE: "r", VERSION: "main", VECTORIZED_DS: "no" }
-        - {LANGUAGE: "py", VERSION: "1.12.1"}
-    BATCH_SIZE_ITER: *small_batch_size_iter
+    matrix:
+      LANGUAGE_SETTINGS:
+          - {LANGUAGE: "r", VERSION: "CRAN-v0.8.1"}
+          - {LANGUAGE: "r", VERSION: "main", VECTORIZED_DS: "yes" }
+          - {LANGUAGE: "r", VERSION: "main", VECTORIZED_DS: "no" }
+          - {LANGUAGE: "py", VERSION: "1.12.1"}
+      BATCH_SIZE_ITER: *small_batch_size_iter
