@@ -4,6 +4,7 @@ import time
 import os
 
 batch_size = int(os.environ.get('BATCH_SIZE', "128"))
+device = os.environ.get('DEVICE', "cpu")
 
 mnist_dataset = torchvision.datasets.MNIST(
   download = True, 
@@ -36,29 +37,33 @@ class Net(torch.nn.Module):
     output = self.fc2(x)
     return output
 
-net = Net()
-
+model = Net().to(device)
+optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)
 dl = torch.utils.data.DataLoader(mnist_dataset, batch_size = batch_size)
 
 def f():
   i = 0
-  model = Net()
-  optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)
-  
   for x, y in dl:
     optimizer.zero_grad()
-    output = model(x)
-    loss = torch.nn.functional.cross_entropy(output, y)
+    output = model(x.to(device=device))
+    loss = torch.nn.functional.cross_entropy(output, y.to(device=device))
     loss.backward()
     optimizer.step()
     i = i+1
     if i > ir: break
-    
+
+if device=="cpu":
+  fn = f
+else:
+  def fn():
+    f()
+    torch.cuda.synchronize()
+
 ir = 1
-f()
+fn()
 
 ir = int(os.environ.get('ITER', "20"))
 
 start_time = time.time()
-f()
+fn()
 print((time.time() - start_time))

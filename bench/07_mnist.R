@@ -3,6 +3,7 @@ library(torchvision)
 
 batch_size <- as.numeric(Sys.getenv("BATCH_SIZE", unset = "128"))
 vectorized <- Sys.getenv("VECTORIZED_DS", unset = "yes")
+device <- Sys.getenv("DEVICE", unset = "cpu")
 
 if (vectorized == "no") {
   mnist_dataset <- torchvision::mnist_dataset(
@@ -53,17 +54,16 @@ net <- nn_module(
   }
 )
 
+model <- net()$to(device=device)
+optimizer <- optim_sgd(model$parameters, lr = 0.01)
 dl <- dataloader(mnist_dataset, batch_size = batch_size)
 
 f <- function() {
   i <- 0
-  model <- net()
-  optimizer <- optim_sgd(model$parameters, lr = 0.01)
-
   coro::loop(for (b in dl) {
     optimizer$zero_grad()
-    output <- model(b[[1]])
-    loss <- nnf_cross_entropy(output, b[[2]])
+    output <- model(b[[1]]$to(device=device))
+    loss <- nnf_cross_entropy(output, b[[2]]$to(device=device))
     loss$backward()
     optimizer$step()
     i <- i + 1
@@ -74,8 +74,17 @@ f <- function() {
   invisible(NULL)
 }
 
+if (device == "cpu") {
+  fn <- f
+} else {
+  fn <- function() {
+    f()
+    cuda_synchronize()
+  }
+}
+
 iter <- 1
-f()
+fn()
 
 iter <- as.numeric(Sys.getenv("ITER", unset = "20"))
-cat(system.time(f())[["elapsed"]])
+cat(system.time(fn())[["elapsed"]])

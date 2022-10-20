@@ -3,6 +3,7 @@ import time
 import os
 
 batch_size = int(os.environ.get('BATCH_SIZE', "1000"))
+device = os.environ.get('DEVICE', "cpu")
 
 class Dataset (torch.utils.data.Dataset):
   def __init__ (self, ir, batch_size):
@@ -14,20 +15,27 @@ class Dataset (torch.utils.data.Dataset):
   def __len__ (self):
     return self.l
 
-def f ():
-  for el in torch.utils.data.DataLoader(ds, batch_size = batch_size):
-    x = el[0]
-    y = el[1]
+if device == "cpu":
+  def fn ():
+    for el in torch.utils.data.DataLoader(ds, batch_size = batch_size):
+      x = el[0]
+      y = el[1]
+else:
+  def fn():
+    for el in torch.utils.data.DataLoader(ds, batch_size = batch_size):
+      x = el[0].cuda()
+      y = el[1].cuda()
+    torch.cuda.synchronize()
 
 ir = 1
 ds = Dataset(ir, batch_size)
 
-f()
+fn()
 
 ir = int(os.environ.get('ITER', "1000"))
 ds = Dataset(ir, batch_size)
 
 start_time = time.time()
-f()
+fn()
 print((time.time() - start_time))
 

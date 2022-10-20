@@ -1,6 +1,7 @@
 library(torch)
 
 batch_size <- as.numeric(Sys.getenv("BATCH_SIZE", unset = "1000"))
+device <- Sys.getenv("DEVICE", unset = "cpu")
 
 Dataset <- dataset(
   initialize = function(ir, batch_size) {
@@ -19,20 +20,31 @@ Dataset <- dataset(
   }
 )
 
-f <- function() {
-  coro::loop(for(el in dataloader(ds, batch_size = batch_size)) {
-    x <- el[[1]]
-    y <- el[[2]]
-  })
-  invisible(NULL)
+if (device == "cpu") {
+  fn <- function() {
+    coro::loop(for(el in dataloader(ds, batch_size = batch_size)) {
+      x <- el[[1]]
+      y <- el[[2]]
+    })
+    invisible(NULL)
+  }
+} else {
+  fn <- function() {
+    coro::loop(for(el in dataloader(ds, batch_size = batch_size)) {
+      x <- el[[1]]$cuda()
+      y <- el[[2]]$cuda()
+    })
+    cuda_synchronize()
+    invisible(NULL)
+  }
 }
 
 iter <- 1
 ds <- Dataset(iter, batch_size)
 
-f()
+fn()
 
 iter <- as.numeric(Sys.getenv("ITER", unset = "100"))
 ds <- Dataset(iter, batch_size)
 
-cat(system.time(f())[["elapsed"]])
+cat(system.time(fn())[["elapsed"]])

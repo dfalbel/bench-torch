@@ -1,9 +1,10 @@
 library(torch)
 
 batch_size <- as.numeric(Sys.getenv("BATCH_SIZE", unset = "1000"))
+device <- Sys.getenv("DEVICE", unset = "cpu")
 
-w <- torch_randn(784, 512, requires_grad = TRUE)
-x <- torch_randn(batch_size, 784)
+w <- torch_randn(784, 512, requires_grad = TRUE, device=device)
+x <- torch_randn(batch_size, 784, device=device)
 opt <- optim_sgd(w, lr = 0.01)
 
 f <- function() {
@@ -17,8 +18,17 @@ f <- function() {
   invisible(NULL)
 }
 
+if (device == "cpu") {
+  fn <- f
+} else {
+  fn <- function() {
+    f()
+    cuda_synchronize()
+  }
+
+
 iter <- 1
-f()
+fn()
 iter <- as.numeric(Sys.getenv("ITER", unset = "1000"))
 
-cat(system.time(f())[["elapsed"]])
+cat(system.time(fn())[["elapsed"]])
