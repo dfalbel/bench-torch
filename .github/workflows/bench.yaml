@@ -13,7 +13,7 @@ jobs:
     runs-on: [self-hosted, gpu]
 
     container:
-      image: nvidia/cuda:11.2.2-cudnn8-devel-ubuntu20.04
+      image: nvidia/cuda:11.3.1-cudnn8-devel-ubuntu20.04
       options: --gpus all
 
     env:
@@ -24,6 +24,7 @@ jobs:
       TORCH_TEST: 1
       DEBIAN_FRONTEND: 'noninteractive'
       R_KEEP_PKG_SOURCE: yes
+      CUDA: '11.3'
 
     steps:
       - run: |
