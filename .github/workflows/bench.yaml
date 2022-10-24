@@ -31,6 +31,7 @@ jobs:
       - name: Allow parallel compilation
         run: |
           echo "R_MAKEVARS_USER=$GITHUB_WORKSPACE/bench-torch/bench-torch/Makevars" >> $GITHUB_ENV
+          echo "R_LIBS_USER=$GITHUB_WORKSPACE/bench-torch/bench-torch/rmainlib" >> $GITHUB_ENV
 
       - run: |
           apt-get update -y
