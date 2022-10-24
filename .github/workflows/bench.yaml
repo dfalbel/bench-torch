@@ -37,7 +37,7 @@ jobs:
           apt-get install -y sudo software-properties-common dialog apt-utils tzdata wget zip unzip
           add-apt-repository ppa:git-core/ppa -y
           apt-get update -y
-          apt-get install -y git libopenblas-base
+          apt-get install -y git libopenblas-base libicu-dev
 
       - uses: actions/checkout@v3
         with:
