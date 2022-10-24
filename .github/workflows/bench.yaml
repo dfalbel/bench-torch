@@ -54,8 +54,8 @@ jobs:
 
       - name: Install benchtorch
         run: |
-          install.packages("pak")
-          pak::pkg_install(".")
+          install.packages(c("pak", "remotes"))
+          remotes::install_local()
         shell: Rscript {0}
 
       - uses: actions/setup-python@v4
