@@ -1,3 +1,39 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# benchtorch
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+This repository contains code that is used to benchmark torch. A job
+runs daily and saves the results in the `results` directory.
+
+Benchmarks are run in a docker container in system equipped with:
+
+-   Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz
+-   NVIDIA Corporation GP102 \[GeForce GTX 1080 Ti\]
+
+## Installation
+
+You can reproduce the benchmark by running:
+
+``` sh
+./tools/setup.sh
+```
+
+Then in a R window run:
+
+    benchmark::run_benchmarks()
+
+## Analysing
+
+Results are published to the `results` directory and can be parsed with
+basic tidyverse commands, for example:
+
+<details>
+
+``` r
 library(tidymodels)
 library(jsonlite)
 
@@ -39,7 +75,7 @@ r_results <- results %>%
   mutate(time_rel = time_r/time_py)
 
 r_results %>%
-  filter(DEVICE == "cuda") %>% View()
+  filter(DEVICE == "cuda") %>%
   replace_na(list(VECTORIZED_DS = "")) %>%
   ggplot(aes(x = BATCH_SIZE, y = time_rel, color = VERSION)) +
   geom_point(aes(shape = VECTORIZED_DS)) +
@@ -47,4 +83,8 @@ r_results %>%
   facet_wrap(~name, ncol = 3, scales = "free") +
   geom_hline(yintercept = 1, aes(color = "python"), linetype = "dashed") +
   scale_shape(guide = "none")
+```
 
+</details>
+
+<img src="man/figures/README-python-1.png" width="100%" />
